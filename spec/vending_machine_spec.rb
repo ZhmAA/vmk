@@ -9,12 +9,12 @@ describe VendingMachine do
   end
 
   context 'when a coin is inserted' do
-    it 'display value of the coin' do
-      coin_value = VendingMachine::COINS_VALUES[:dime]
+    context 'when dime' do
+      it 'display value of the coin' do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:dime])
 
-      subject.insert_coin(coin_value)
-
-      expect(subject.display).to eq(coin_value)
+        expect(subject.display).to eq(10)
+      end
     end
   end
 
