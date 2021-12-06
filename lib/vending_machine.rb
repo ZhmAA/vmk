@@ -13,6 +13,8 @@
 # show message "Sold Out" if product does not exist
 
 class VendingMachine
+  COINS_VALUES = { dime: 10 }.freeze
+
   def initialize
     @display = 'Insert Coins'
     @coins_values = []
