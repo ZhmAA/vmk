@@ -24,13 +24,21 @@ describe VendingMachine do
         expect(subject.display).to eq(10)
       end
     end
+
+    context 'when quarter' do
+      it 'display value of the coin' do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+
+        expect(subject.display).to eq(25)
+      end
+    end
   end
 
   context 'when a multiple coins are inserted' do
     it 'display sum value of inserted coins' do
       coin_value1 = VendingMachine::COINS_VALUES[:nickel]
       coin_value2 = VendingMachine::COINS_VALUES[:dime]
-      coin_value3 = 25
+      coin_value3 = VendingMachine::COINS_VALUES[:quarter]
 
       subject.insert_coin(coin_value1)
       subject.insert_coin(coin_value2)
