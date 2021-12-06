@@ -2,8 +2,8 @@
 
 # ✅ show "Insert Coins" on display when no coins
 # ✅ insert coin and display the balance
-# understand which type of coin has been received
-# return coin that does not match currency
+# ✅ understand which type of coin has been received
+# ✅ return coin that does not match currency
 # dispense product after button is clicked
 # show "Insert more coins" if balance does not cover products price
 # shows thank you message after the button is clicked
@@ -23,8 +23,12 @@ class VendingMachine
   attr_reader :display
 
   def insert_coin(coin)
-    @coins_values << coin
+    if COINS_VALUES.values.include?(coin)
+      @coins_values << coin
 
-    @display = @coins_values.sum
+      @display = @coins_values.sum
+    else
+      @display = "Return coin. Balance: #{@coins_values.sum}"
+    end
   end
 end

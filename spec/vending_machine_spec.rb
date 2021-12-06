@@ -47,4 +47,21 @@ describe VendingMachine do
       expect(subject.display).to eq(40)
     end
   end
+
+  context 'when coin is not valid' do
+    it 'return the coin' do
+      subject.insert_coin(7)
+
+      expect(subject.display).to eq("Return coin. Balance: 0")
+    end
+
+    it 'not change coins balance sum' do
+      nickel_coin_value = VendingMachine::COINS_VALUES[:nickel]
+
+      subject.insert_coin(nickel_coin_value)
+      subject.insert_coin(7)
+
+      expect(subject.display).to eq("Return coin. Balance: #{nickel_coin_value}")
+    end
+  end
 end
