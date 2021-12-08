@@ -68,8 +68,17 @@ describe VendingMachine do
   end
 
   describe '#product_button' do
-    context "when 0 coins" do
-      it "returns Insert more coins" do
+    context 'when 0 coins' do
+      it 'returns Insert more coins' do
+        subject.product_button('chips')
+
+        expect(subject.display).to eq('Insert more coins!')
+      end
+    end
+
+    context 'when not enought coins' do
+      it 'returns Insert more coins' do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
         subject.product_button('chips')
 
         expect(subject.display).to eq('Insert more coins!')

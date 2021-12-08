@@ -4,13 +4,15 @@
 # ✅ insert coin and display the balance
 # ✅ understand which type of coin has been received
 # ✅ return coin that does not match currency
-# show "Insert more coins" if balance does not cover products price
+# ✅ show "Insert more coins" if balance does not cover products price
 # dispense product after button is clicked
 # shows thank you message after the button is clicked
 # returns change if extra balance after purchasing product
 # show message "Change not available. Return money or purchase without change" if no coins remain in vending machine
 # buyer can push a button to return money
 # show message "Sold Out" if product does not exist
+
+require_relative 'product'
 
 class VendingMachine
   COINS_VALUES = { nickel: 5, dime: 10, quarter: 25 }.freeze
@@ -32,7 +34,11 @@ class VendingMachine
     end
   end
 
-  def product_button(_product)
-    @display = 'Insert more coins!' if @coins_values.empty?
+  def product_button(product_name)
+    vm_products = [Product.new('chips', 50)]
+
+    product = vm_products.select { |p| p.name == product_name }.first
+
+    @display = 'Insert more coins!' if @coins_values.sum < product.price
   end
 end
