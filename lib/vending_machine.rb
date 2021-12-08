@@ -4,8 +4,8 @@
 # ✅ insert coin and display the balance
 # ✅ understand which type of coin has been received
 # ✅ return coin that does not match currency
-# dispense product after button is clicked
 # show "Insert more coins" if balance does not cover products price
+# dispense product after button is clicked
 # shows thank you message after the button is clicked
 # returns change if extra balance after purchasing product
 # show message "Change not available. Return money or purchase without change" if no coins remain in vending machine
@@ -30,5 +30,9 @@ class VendingMachine
     else
       @display = "Return coin. Balance: #{@coins_values.sum}"
     end
+  end
+
+  def product_button(_product)
+    @display = 'Insert more coins!' if @coins_values.empty?
   end
 end
