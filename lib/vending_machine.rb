@@ -16,6 +16,7 @@ require_relative 'product'
 
 class VendingMachine
   COINS_VALUES = { nickel: 5, dime: 10, quarter: 25 }.freeze
+  VM_PRODUCTS = [Product.new('chips', 50)].freeze
 
   def initialize
     @display = 'Insert Coins'
@@ -28,17 +29,25 @@ class VendingMachine
     if COINS_VALUES.values.include?(coin)
       @coins_values << coin
 
-      @display = @coins_values.sum
+      setup_display(coins_sum)
     else
-      @display = "Return coin. Balance: #{@coins_values.sum}"
+      setup_display("Return coin. Balance: #{coins_sum}")
     end
   end
 
   def product_button(product_name)
-    vm_products = [Product.new('chips', 50)]
+    product = VM_PRODUCTS.select { |p| p.name == product_name }.first
 
-    product = vm_products.select { |p| p.name == product_name }.first
+    setup_display('Insert more coins!') if coins_sum < product.price
+  end
 
-    @display = 'Insert more coins!' if @coins_values.sum < product.price
+  private
+
+  def coins_sum
+    @coins_values.sum
+  end
+
+  def setup_display(content)
+    @display = content
   end
 end
