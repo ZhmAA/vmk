@@ -40,8 +40,9 @@ class VendingMachine
   def product_button(product_name)
     product = VM_PRODUCTS.select { |p| p.name == product_name }.first
 
-    setup_display('Insert more coins!') if coins_sum < product.price
+    return setup_display('Insert more coins!') if coins_sum < product.price
 
+    setup_display("Thank you. Here is your #{product.name}")
     product.dispense
   end
 
@@ -53,9 +54,5 @@ class VendingMachine
 
   def setup_display(content)
     @display = content
-  end
-
-  def dispence(product)
-    product.name
   end
 end

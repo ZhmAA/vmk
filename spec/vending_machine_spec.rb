@@ -68,6 +68,16 @@ describe VendingMachine do
   end
 
   describe '#product_button' do
+    it 'show thank you message' do
+      subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+
+      expect(subject.display).to eq(50)
+      subject.product_button('chips')
+
+      expect(subject.display).to eq('Thank you. Here is your chips')
+    end
+
     it 'dispence product' do
       name = 'chips'
       product = instance_double('Product', name: name, price: 50)
