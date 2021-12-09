@@ -13,4 +13,10 @@ describe Product do
   it 'should have a price' do
     expect(subject.price).to eq 100
   end
+
+  describe '#dispense' do
+    it 'return name of dispensed product' do
+      expect(subject.dispense).to eq('cola')
+    end
+  end
 end

@@ -5,4 +5,8 @@ class Product
     @name = name
     @price = price
   end
+
+  def dispense
+    @name
+  end
 end

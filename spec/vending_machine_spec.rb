@@ -68,6 +68,20 @@ describe VendingMachine do
   end
 
   describe '#product_button' do
+    it 'dispence product' do
+      name = 'chips'
+      product = instance_double('Product', name: name, price: 50)
+
+      allow(product).to receive(:dispense).and_return(name)
+
+      2.times do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      end
+
+      expect(subject.display).to eq(50)
+      expect(subject.product_button(name)).to eq(name)
+    end
+
     context 'when 0 coins' do
       it 'returns Insert more coins' do
         subject.product_button('chips')
