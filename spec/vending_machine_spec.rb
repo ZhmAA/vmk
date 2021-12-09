@@ -69,8 +69,9 @@ describe VendingMachine do
 
   describe '#product_button' do
     it 'show thank you message' do
-      subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
-      subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      2.times do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      end
 
       expect(subject.display).to eq(50)
       subject.product_button('chips')
@@ -90,6 +91,31 @@ describe VendingMachine do
 
       expect(subject.display).to eq(50)
       expect(subject.product_button(name)).to eq(name)
+    end
+
+    it 'reset coins values after dispense product' do
+      3.times do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      end
+
+      expect(subject.display).to eq(75)
+
+      subject.product_button('chips')
+
+      expect(subject.coins_values.sum).to eq(25)
+    end
+
+    it 'reset display after dispense product' do
+      3.times do
+        subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      end
+
+      expect(subject.display).to eq(75)
+
+      subject.product_button('chips')
+
+      expect(subject.display).to eq('Thank you. Here is your chips')
+      expect(subject.display).to eq(25)
     end
 
     context 'when 0 coins' do
