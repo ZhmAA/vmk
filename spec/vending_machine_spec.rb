@@ -135,4 +135,37 @@ describe VendingMachine do
       end
     end
   end
+
+  describe '#return_coins' do
+    context 'when 0 coins' do
+      it 'return message You have no balance to return' do
+        subject.return_coins
+
+        expect(subject.display).to eq('You have no balance to return')
+      end
+    end
+
+    it 'return inserted coins' do
+      subject.insert_coin(VendingMachine::COINS_VALUES[:nickel])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:dime])
+
+      expect(subject.display).to eq(15)
+
+      subject.return_coins
+
+      expect(subject.display).to eq('Return 15 coins')
+      expect(subject.display).to eq('Insert Coins')
+    end
+
+    it 'decrease coins values to 0' do
+      subject.insert_coin(VendingMachine::COINS_VALUES[:nickel])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:dime])
+
+      expect(subject.display).to eq(15)
+
+      subject.return_coins
+
+      expect(subject.coins_values.sum).to eq(0)
+    end
+  end
 end
