@@ -8,10 +8,10 @@
 # ✅ dispense product after button is clicked
 # ✅ shows thank you message after the button is clicked
 # ✅ reset coins and display after dispense product
-#    - maybe diplay Insert coin if 0 coins after dispense
+# ✅  - maybe diplay Insert coin if 0 coins after dispense
 # ✅ buyer can push a button to return money
-# returns change if extra balance after purchasing product
-#    - return change coin by coin from sum of the coins values array
+# ✅ returns change if extra balance after purchasing product
+# ✅ - return change coin by coin from sum of the coins values array
 # show message "Change not available. Return money or purchase without change" if no coins remain in vending machine
 # show message "Sold Out" if product does not exist
 
@@ -62,9 +62,9 @@ class VendingMachine
   def return_coins
     return setup_display('You have no balance to return') if coins_sum.zero?
 
-    setup_display("Return #{coins_sum} coins")
+    setup_display("Returning #{coins_sum} coins")
 
-    @coins_values = []
+    calculate_coins_to_return
   end
 
   private
@@ -88,6 +88,25 @@ class VendingMachine
   end
 
   def reset_condition
-    @display.to_s.include?('Thank you') || @display.to_s.include?('Return')
+    @display.to_s.include?('Thank you') || @display.to_s.include?('Returning')
+  end
+
+  def calculate_coins_to_return
+    quarter_count = coins_sum / COINS_VALUES[:quarter]
+    recalc_coins_values(:quarter, quarter_count)
+
+    dime_count = coins_sum / COINS_VALUES[:dime]
+    recalc_coins_values(:dime, dime_count)
+
+    nickel_count = coins_sum / COINS_VALUES[:nickel]
+    recalc_coins_values(:nickel, nickel_count)
+
+    @coins_values = []
+
+    [quarter: quarter_count, dime: dime_count, nickel: nickel_count]
+  end
+
+  def recalc_coins_values(coin_type, coin_count)
+    @coins_values = [coins_sum - coin_count * COINS_VALUES[coin_type]]
   end
 end

@@ -145,7 +145,7 @@ describe VendingMachine do
       end
     end
 
-    it 'return inserted coins' do
+    it 'return inserted coins value' do
       subject.insert_coin(VendingMachine::COINS_VALUES[:nickel])
       subject.insert_coin(VendingMachine::COINS_VALUES[:dime])
 
@@ -153,7 +153,7 @@ describe VendingMachine do
 
       subject.return_coins
 
-      expect(subject.display).to eq('Return 15 coins')
+      expect(subject.display).to eq('Returning 15 coins')
       expect(subject.display).to eq('Insert Coins')
     end
 
@@ -166,6 +166,17 @@ describe VendingMachine do
       subject.return_coins
 
       expect(subject.coins_values.sum).to eq(0)
+    end
+
+    it 'return real coins from the sum' do
+      subject.insert_coin(VendingMachine::COINS_VALUES[:quarter])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:dime])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:nickel])
+      subject.insert_coin(VendingMachine::COINS_VALUES[:nickel])
+
+      expect(subject.display).to eq(45)
+
+      expect(subject.return_coins).to eq([{ dime: 2, nickel: 0, quarter: 1 }])
     end
   end
 end
